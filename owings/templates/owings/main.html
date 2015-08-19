@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Owings</title>
+        <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/static/js/main.js"></script>
+
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <button class="btn btn-default navbar-btn" id="add_list">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <i class="glyphicon glyphicon-list-alt"></i>
+                </button>
+            </div>
+        </nav>
+        <div class="container" id="add_list_form" style="display: none;">
+            <div class="well">
+                <form class="form-horizontal" action="/add_list" method="POST">
+                    {% csrf_token %}
+                    <h3>Add List</h3>
+                    <div class="form-group">
+                        <label for="list-name" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input id="list-name" type="text" class="form-control" name="list-name" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <table class="table table-hover table-striped">
+                    {% for list in lists %}
+                        <tr>
+                            <td><a href="/list/{{ list.id }}">{{ list.name }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

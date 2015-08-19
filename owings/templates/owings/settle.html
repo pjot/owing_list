@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Owings</title>
+        <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/static/js/main.js"></script>
+
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <a href="/list/{{ list.id }}" class="btn btn-default navbar-btn">
+                    <i class="glyphicon glyphicon-chevron-left"></i>
+                </a>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="row">
+                <table class="table table-hover table-striped">
+                    <tr>
+                        <th>From</td>
+                        <th>To</td>
+                        <th>Amount</td>
+                        <td></td>
+                    </tr>
+                    {% for settlement in settlements %}
+                        <tr>
+                            <td>{{ settlement.from }}</td>
+                            <td>{{ settlement.to }}</td>
+                            <td>{{ settlement.amount }} {{ currency.iso_code }}</td>
+                            <td>
+                                <form action="/add_payment" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="from_id" value="{{ settlement.from_id }}" />
+                                    <input type="hidden" name="to_id" value="{{ settlement.to_id}}" />
+                                    <input type="hidden" name="amount" value="{{ settlement.amount }}" />
+                                    <input type="hidden" name="currency_id" value="{{ currency.id }}" />
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i class="glyphicon glyphicon-transfer"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
